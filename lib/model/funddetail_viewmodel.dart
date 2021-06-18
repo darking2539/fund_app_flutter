@@ -100,3 +100,7 @@ class FundNavClass {
           dayChange: json["d_change"]
       );
 }
+
+
+
+

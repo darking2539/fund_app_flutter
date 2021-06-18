@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fund_app/model/funddetail_viewmodel.dart';
+import 'package:fund_app/model/fundproportion_viewmodel.dart';
 import 'package:fund_app/navigation/navigation.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -15,21 +16,26 @@ ThunkAction loadingFundAction(finId) {
       EasyLoading.show(status: 'Downloading...');
       store.dispatch(LoadFundAction());
 
-      var response = await fetchFund(finId);
+      var response = await fetchFund(finId); //fund detail
       var data_rb = jsonDecode(response.body);
 
-      var response2 = await fetchFund2(finId);
+      var response2 = await fetchFund2(finId); //fund nav
       var nav_rb = jsonDecode(response2.body);
 
+      var response3 = await fetchFund3(finId); //fund nav
+      var list3 = json.decode(response3.body)['top_holdings'][0]['assets'];
+      var dataDate3 = json.decode(response3.body)['top_holdings'][0]['data_date'];
 
       FundDetailClass result_data = FundDetailClass.fromJson(data_rb);
       FundNavClass result_nav = FundNavClass.fromJson(nav_rb);
 
+      List<FundTopHoldClass> data = List<FundTopHoldClass>.from(list3.map((model)=> FundTopHoldClass.fromJson(model)));
+
       var f = NumberFormat("#,###.##");
-      print(f.format(result_data.netAsset));
 
 
       Future.delayed(const Duration(milliseconds: 1000), () {
+        store.dispatch(LoadProportionAction(dataDate3,data));
         store.dispatch(LoadFundSuccessAction(result_data,result_nav));
         EasyLoading.showSuccess('Loading Data Successful!');
         Keys.navKey.currentState!.pushNamed(Routes.fundDetail);
@@ -55,6 +61,11 @@ class LoadFundFailedAction {
   LoadFundFailedAction();
 }
 
+class LoadProportionAction {
+  final String navDate;
+  final List<FundTopHoldClass> payload;
+  LoadProportionAction(this.navDate,this.payload);
+}
 
 
 Future<http.Response> fetchFund(finId) {
@@ -63,4 +74,8 @@ Future<http.Response> fetchFund(finId) {
 
 Future<http.Response> fetchFund2(finId) {
   return http.get(Uri.parse('https://www.finnomena.com/fn3/api/fund/nav/latest?fund=$finId'));
+}
+
+Future<http.Response> fetchFund3(finId) {
+  return http.get(Uri.parse('https://www.finnomena.com/fn3/api/fund/public/topholdings/$finId'));
 }

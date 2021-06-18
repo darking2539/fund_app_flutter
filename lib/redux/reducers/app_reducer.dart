@@ -1,3 +1,4 @@
+import 'package:fund_app/redux/reducers/fundpropotion_reducer.dart';
 import 'package:fund_app/redux/reducers/mutualfund_reducer.dart';
 import 'package:fund_app/redux/reducers/user_reducer.dart';
 import 'package:fund_app/redux/state/app_state.dart';
@@ -10,5 +11,6 @@ AppState appReducer(AppState state, action) {
     loadingState: loadingReducer(state.loadingState, action),
     mutualFundState: mutualFundReducer(state.mutualFundState, action),
     fundDetailState: fundDetailReducer(state.fundDetailState, action),
+    fundProportionState: fundProportionReducer(state.fundProportionState, action),
   );
 }

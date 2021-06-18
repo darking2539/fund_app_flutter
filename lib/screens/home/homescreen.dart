@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fund_app/model/mutualfund_viewmodel.dart';
-import 'package:fund_app/screens/mutualfund/mutialfund_screen.dart';
+import 'package:fund_app/screens/mutualfund/mutualfund_screen.dart';
 
 class HomeScreen extends StatefulWidget {
 

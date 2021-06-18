@@ -3,9 +3,43 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:fund_app/model/funddetail_viewmodel.dart';
 import 'package:fund_app/model/mutualfund_viewmodel.dart';
 import 'package:fund_app/redux/state/app_state.dart';
-import 'package:intl/intl.dart';
+import 'package:fund_app/screens/mutualfund/proportion/mutualfund_proportion.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:line_icons/line_icons.dart';
 
-class MutualFundDetail extends StatelessWidget {
+import 'overview/mutualfund_overview.dart';
+
+void showAlertDialog(context) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (context) {
+      return AlertDialog(
+        title: Text("Please Login"),
+        content: Text("คุณต้องเข้าสู่ระบบเพื่อติดตามกองทุน"),
+        actions: <Widget>[
+          // ignore: deprecated_member_use
+          OutlineButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("Sign in"),
+          ),
+          // ignore: deprecated_member_use
+          OutlineButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("Login"),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+class MutualFundDetail extends StatefulWidget {
+
   MutualFundDetail({
     required this.viewModel_1,
     required this.viewModel_2,
@@ -13,172 +47,129 @@ class MutualFundDetail extends StatelessWidget {
 
   FundDetailViewModel viewModel_1;
   MutualFundViewModel viewModel_2;
-  var numFormat = NumberFormat("#,###.##");
 
-  init() {
-    print(viewModel_2.payload_2);
-    //viewModel_1.loadingFund(viewModel_2.payload_2);
-  }
+  @override
+  _MutualFundDetailState createState() => _MutualFundDetailState();
+}
 
-  //viewModel.payload_2.value
-  //viewModel.payload_2.dayChange
+class _MutualFundDetailState extends State<MutualFundDetail> {
+  var padding = EdgeInsets.symmetric(horizontal: 18, vertical: 5);
+  double gap = 10;
 
-  colorNav(value, dayChange) {
-    if (double.parse(dayChange) >= 0)
-      return Text("$value (+$dayChange%)",
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.green));
-    else
-      return Text("$value ($dayChange%)",
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.red));
+  int _index = 0;
 
-  }
+  static const TextStyle optionStyle =
+  TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
 
-  void showAlertDialog(context) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Please Login"),
-          content: Text("คุณต้องเข้าสู่ระบบเพื่อติดตามกองทุน"),
-          actions: <Widget>[
-            // ignore: deprecated_member_use
-            OutlineButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("Sign in"),
-            ),
-            // ignore: deprecated_member_use
-            OutlineButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("Login"),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  List<Widget> _widgetOptions = <Widget>[
+    MutualFundOverview(),
+    Container(child: Center(child: Text("Return"))),
+    MutualFundProportion(),
+    Container(child: Center(child: Text("Fee"))),
+  ];
+
+  PageController controller = PageController();
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, FundDetailViewModel>(
-        onInit: init(),
         converter: (store) => FundDetailViewModel.fromStore(store),
         builder: (BuildContext context, FundDetailViewModel viewModel) {
           return Scaffold(
-              appBar: AppBar(
-                title: Text('${viewModel.payload_1.engName}'),
-                actions: <Widget>[
-                  IconButton(
-                      onPressed: () {
-                        showAlertDialog(context);
-                      },
-                      icon: Icon(Icons.favorite_border))
-                ],
-              ),
-              body: Container(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Container(alignment: Alignment.topLeft , child: Text("${viewModel.payload_1.shortCode}",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)), ),
-                    topShow(viewModel),
-                    Container(height: 10),
-                    totalFundValue(viewModel),
-                    Container(height: 20),
-                    graph()
+                appBar: AppBar(
+                  title: Text('${viewModel.payload_1.shortCode}'),
+                  actions: <Widget>[
+                    IconButton(
+                        onPressed: () {
+                          showAlertDialog(context);
+                        },
+                        icon: Icon(Icons.favorite_border))
                   ],
                 ),
-              ));
-        });
+                body: Column(children: <Widget>[
+                  Container(height: 5),
+                  SafeArea(
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                          color: Colors.white70,
+                          borderRadius: BorderRadius.all(Radius.circular(50)),
+                          boxShadow: [
+                            BoxShadow(
+                              spreadRadius: -10,
+                              blurRadius: 60,
+                              color: Colors.black.withOpacity(0.4),
+                              offset: Offset(0, 25),
+                            )
+                          ]),
+                      child: Padding(
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: GNav(
+                          curve: Curves.fastOutSlowIn,
+                          duration: Duration(milliseconds: 900),
+                          tabs: [
+                            GButton(
+                              gap: gap,
+                              icon: LineIcons.home,
+                              iconColor: Colors.black,
+                              iconActiveColor: Colors.purple,
+                              text: 'Overview',
+                              textColor: Colors.purple,
+                              backgroundColor: Colors.purple.withOpacity(0.2),
+                              iconSize: 20,
+                              padding: padding,
+                            ),
+                            GButton(
+                              gap: gap,
+                              icon: LineIcons.dollarSign,
+                              iconColor: Colors.black,
+                              iconActiveColor: Colors.pink,
+                              text: 'Return',
+                              textColor: Colors.pink,
+                              backgroundColor: Colors.pink.withOpacity(0.2),
+                              iconSize: 20,
+                              padding: padding,
+                            ),
+                            GButton(
+                              gap: gap,
+                              icon: LineIcons.pieChart,
+                              iconColor: Colors.black,
+                              iconActiveColor: Colors.lightBlueAccent,
+                              text: 'Proportion',
+                              textColor: Colors.lightBlueAccent,
+                              backgroundColor: Colors.lightBlueAccent.withOpacity(0.2),
+                              iconSize: 20,
+                              padding: padding,
+                            ),
+                            GButton(
+                              gap: gap,
+                              icon: LineIcons.commentDollar,
+                              iconColor: Colors.black,
+                              iconActiveColor: Colors.teal,
+                              text: 'Fee',
+                              textColor: Colors.teal,
+                              backgroundColor: Colors.teal.withOpacity(0.2),
+                              iconSize: 20,
+                              padding: padding,
+                            ),
+                          ],
+                          selectedIndex: _index,
+                          onTabChange: (index) {
+                            setState(() {
+                              _index = index;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  _widgetOptions.elementAt(_index),
+
+
+                ])
+          );
+        }
+    );
   }
-
-  Widget topShow(viewModel) => Container(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(height: 5),
-              Container(
-                width: 160,
-                child: Text('${viewModel.payload_1.thName}',
-                    style:
-                        TextStyle(fontWeight: FontWeight.normal, fontSize: 12)),
-              ),
-              Container(height: 5),
-              Text("NAV (${viewModel.payload_2.navDate})",
-                  style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 12,
-                      color: Colors.blueGrey[800])),
-              Container(height: 5),
-              colorNav(viewModel.payload_2.value,viewModel.payload_2.dayChange),
-            ],
-          ),
-          Spacer(),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(height: 5),
-              Container(
-                  width: 160,
-                  child: Text("Risk: ${viewModel.payload_1.riskSpectrum}",
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal, fontSize: 12))),
-              Container(height: 5),
-              Text("${viewModel.payload_1.engCategory}",
-                  style:
-                      TextStyle(fontWeight: FontWeight.normal, fontSize: 12)),
-              Text("(${viewModel.payload_1.thCategory})",
-                  style:
-                      TextStyle(fontWeight: FontWeight.normal, fontSize: 10)),
-              Container(height: 5),
-              Text("Dividend: ${viewModel.payload_1.diViDeNedPolicy}",
-                  style:
-                      TextStyle(fontWeight: FontWeight.normal, fontSize: 12)),
-              Container(height: 5),
-            ],
-          ),
-        ],
-      ));
-
-  Widget totalFundValue(viewModel) => Container(
-          child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Text("Total Fund Value:",
-              style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 12,
-                  color: Colors.blueGrey[800])),
-          Container(width: 5),
-          Text("${numFormat.format(viewModel.payload_1.netAsset)}",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                  color: Colors.blueGrey[800])),
-        ],
-      ));
-
-  Widget graph() => Container(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Image.asset(
-            "assets/images/graph2.gif",
-          )
-        ],
-      ));
 }

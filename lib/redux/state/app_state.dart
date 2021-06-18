@@ -1,4 +1,5 @@
 import 'package:fund_app/redux/state/funddetail_state.dart';
+import 'package:fund_app/redux/state/fundproportion_state.dart';
 import 'package:fund_app/redux/state/mutualfund_state.dart';
 import 'package:fund_app/redux/state/user_state.dart';
 import 'package:meta/meta.dart';
@@ -11,12 +12,14 @@ class AppState {
   final LoadingState loadingState;
   final MutualFundState mutualFundState;
   final FundDetailState fundDetailState;
+  final FundProportionState fundProportionState;
 
   AppState({
     required this.userState,
     required this.loadingState,
     required this.mutualFundState,
     required this.fundDetailState,
+    required this.fundProportionState,
   });
 
   factory AppState.initial() {
@@ -24,6 +27,7 @@ class AppState {
         userState: UserState.initial(),
         loadingState: LoadingState.initial(),
         mutualFundState: MutualFundState.initial(),
-        fundDetailState: FundDetailState.initial());
+        fundDetailState: FundDetailState.initial(),
+        fundProportionState: FundProportionState.initial());
   }
 }

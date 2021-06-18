@@ -6,7 +6,6 @@ import 'package:fund_app/redux/reducers/app_reducer.dart';
 import 'package:fund_app/redux/state/app_state.dart';
 import 'package:fund_app/screens/home/homescreen.dart';
 import 'package:fund_app/screens/loading/loadingscreen.dart';
-import 'package:fund_app/screens/mutualfund/fundsearch.dart';
 import 'package:fund_app/screens/mutualfund/mutualfund_detail.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -39,9 +38,6 @@ class MyApp extends StatelessWidget {
         routes: {
           Routes.homeScreen: (context) {
             return HomeScreen(store: store);
-          },
-          Routes.fundSearch: (context) {
-            return FundSearch();
           },
           Routes.fundDetail: (context) {
             return MutualFundDetail(viewModel_1: FundDetailViewModel.fromStore(store), viewModel_2: MutualFundViewModel.fromStore(store));

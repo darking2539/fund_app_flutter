@@ -169,7 +169,7 @@ class _TopFundState extends State<TopFund> {
       ));
 
   Widget topFundScreen() => ListView.builder(
-    padding: EdgeInsets.all(10.0) ,
+      padding: EdgeInsets.all(10.0) ,
       physics: ClampingScrollPhysics(),
       shrinkWrap: true,
       itemCount: length,
