@@ -78,7 +78,8 @@ class MutualFundProportion extends StatelessWidget {
         Container(
             alignment: Alignment.topRight,
             width: 80,
-            child: Text("${item.percent.toString()}%"))
+            child: item.percent is num ? Text("${item.percent.toString()}%") : null
+        )
       ]),
     )).toList(),
     );
@@ -133,6 +134,7 @@ class MutualFundProportion extends StatelessWidget {
 
     List list = [];
     for (FundTopHoldClass i in viewModel.payload){
+      if(i.percent is double)
       list.add(i.percent);
     }
 
