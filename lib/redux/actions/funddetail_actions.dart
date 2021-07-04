@@ -26,16 +26,22 @@ ThunkAction loadingFundAction(finId) {
       var list3 = json.decode(response3.body)['top_holdings'][0]['assets'];
       var dataDate3 = json.decode(response3.body)['top_holdings'][0]['data_date'];
 
+      var response4 = await fetchFund4(finId);
+      var list4 = json.decode(response4.body)['assetallocationbreakdown']['assets'];
+
       FundDetailClass result_data = FundDetailClass.fromJson(data_rb);
       FundNavClass result_nav = FundNavClass.fromJson(nav_rb);
 
-      List<FundTopHoldClass> data = List<FundTopHoldClass>.from(list3.map((model)=> FundTopHoldClass.fromJson(model)));
+      List<FundTopHoldClass> topHoldings = List<FundTopHoldClass>.from(list3.map((model)=> FundTopHoldClass.fromJson(model)));
+      List<InvestmentProportionClass> investmentProportion = List<InvestmentProportionClass>.from(list4.map((model)=> InvestmentProportionClass.fromJson(model)));
+
+      print(investmentProportion.first.name);
 
       var f = NumberFormat("#,###.##");
 
 
       Future.delayed(const Duration(milliseconds: 1000), () {
-        store.dispatch(LoadProportionAction(dataDate3,data));
+        store.dispatch(LoadProportionAction(dataDate3,topHoldings, investmentProportion));
         store.dispatch(LoadFundSuccessAction(result_data,result_nav));
         EasyLoading.showSuccess('Loading Data Successful!');
         Keys.navKey.currentState!.pushNamed(Routes.fundDetail);
@@ -64,7 +70,8 @@ class LoadFundFailedAction {
 class LoadProportionAction {
   final String navDate;
   final List<FundTopHoldClass> payload;
-  LoadProportionAction(this.navDate,this.payload);
+  final List<InvestmentProportionClass> payload2;
+  LoadProportionAction(this.navDate,this.payload, this.payload2);
 }
 
 
@@ -78,4 +85,8 @@ Future<http.Response> fetchFund2(finId) {
 
 Future<http.Response> fetchFund3(finId) {
   return http.get(Uri.parse('https://www.finnomena.com/fn3/api/fund/public/topholdings/$finId'));
+}
+
+Future<http.Response> fetchFund4(finId) {
+  return http.get(Uri.parse('https://www.finnomena.com/fn3/api/fund/public/$finId/breakdown'));
 }

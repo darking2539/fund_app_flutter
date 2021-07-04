@@ -7,7 +7,6 @@ class FundDetailViewModel {
   final bool loadingError;
   final FundDetailClass payload_1;
   final FundNavClass payload_2;
-
   final Function(String) loadingFund;
 
   FundDetailViewModel({

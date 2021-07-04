@@ -6,17 +6,20 @@ class FundProportionViewModel {
 
   final String dataDate;
   final List<FundTopHoldClass> payload;
+  final List<InvestmentProportionClass> payload2;
 
 
   FundProportionViewModel({
     required this.dataDate,
     required this.payload,
+    required this.payload2,
   });
 
   static FundProportionViewModel fromStore(Store<AppState> store) {
     return FundProportionViewModel(
         dataDate: store.state.fundProportionState.dataDate,
         payload: store.state.fundProportionState.payload,
+        payload2: store.state.fundProportionState.payload2,
     );
   }
 }
@@ -42,5 +45,22 @@ class FundTopHoldClass {
         percent: json["percent"],
         shortCode: json["short_code"],
         linkUrl: json["link_url"],
+      );
+}
+
+class InvestmentProportionClass {
+  String name;
+  var percent;
+
+
+  InvestmentProportionClass({
+    required this.name,
+    required this.percent,
+  });
+
+  factory InvestmentProportionClass.fromJson(Map<String, dynamic> json) =>
+      InvestmentProportionClass(
+        name: json["name"],
+        percent: json["percent"],
       );
 }

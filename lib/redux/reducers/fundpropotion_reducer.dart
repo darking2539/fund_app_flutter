@@ -11,6 +11,6 @@ final fundProportionReducer = combineReducers<FundProportionState>([
 ]);
 
 FundProportionState _fundProportionSuccess(FundProportionState state, LoadProportionAction action) {
-  return FundProportionState(dataDate: action.navDate, payload: action.payload);
+  return FundProportionState(dataDate: action.navDate, payload: action.payload, payload2: action.payload2);
 }
 
