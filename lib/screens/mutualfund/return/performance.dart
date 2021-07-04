@@ -4,9 +4,9 @@ class Performance extends StatelessWidget {
 
   Widget header() {
     return Container(
-        alignment: Alignment.topRight,
-        child: Row(children: <Widget>[
-          Container(width: 100),
+        child: Row(mainAxisAlignment: MainAxisAlignment.center ,children: <Widget>[
+          Container(width: 80),
+          Container(width: 10),
           Container(alignment: Alignment.center, width: 80, child: Text("กองนี้",
               style: TextStyle(
                   fontWeight: FontWeight.bold))),
@@ -14,6 +14,7 @@ class Performance extends StatelessWidget {
           Container(alignment: Alignment.center, width: 80, child: Text("เฉลี่ยในกลุ่ม",
               style: TextStyle(
                   fontWeight: FontWeight.bold))),
+          Container(width: 10),
         ]));
   }
 
@@ -25,11 +26,13 @@ class Performance extends StatelessWidget {
         indent: 20,
         endIndent: 20,
       ),
-      Row(children: <Widget>[
-        Container(alignment: Alignment.center, width: 100, child: Text("$one")),
+      Row(mainAxisAlignment: MainAxisAlignment.center ,children: <Widget>[
+        Container(alignment: Alignment.center, width: 80, child: Text("$one")),
+        Container(width: 10),
         Container(alignment: Alignment.center, width: 80, child: Text("$two")),
         Container(width: 10),
-        Container(alignment: Alignment.center, width: 80, child: Text("$three"))
+        Container(alignment: Alignment.center, width: 80, child: Text("$three")),
+        Container(width: 10),
       ],
       ),
       Container(height: 5),

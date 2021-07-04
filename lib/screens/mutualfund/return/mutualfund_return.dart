@@ -23,7 +23,7 @@ class MutualFundReturn extends StatelessWidget {
                 Container(height: 5),
                 Container(child: Performance()),
                 Container(height: 20),
-                Container(child: Center(child: Text("boss"),)),
+                Container(child: Center(child: Text("boss develop"),)),
               ],
             ),
           );

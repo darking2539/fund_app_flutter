@@ -17,7 +17,7 @@ void showAlertDialog(context) {
     builder: (context) {
       return AlertDialog(
         title: Text("Please Login"),
-        content: Text("คุณต้องเข้าสู่ระบบเพื่อติดตามกองทุน"),
+        content: Text("เข้าสู่ระบบเพื่อติดตามกองทุน"),
         actions: <Widget>[
           // ignore: deprecated_member_use
           OutlineButton(
