@@ -4,6 +4,7 @@ import 'package:fund_app/model/funddetail_viewmodel.dart';
 import 'package:fund_app/model/mutualfund_viewmodel.dart';
 import 'package:fund_app/redux/state/app_state.dart';
 import 'package:fund_app/screens/mutualfund/proportion/mutualfund_proportion.dart';
+import 'package:fund_app/screens/mutualfund/return/mutualfund_return.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -63,7 +64,7 @@ class _MutualFundDetailState extends State<MutualFundDetail> {
 
   List<Widget> _widgetOptions = <Widget>[
     MutualFundOverview(),
-    Container(child: Center(child: Text("Return"))),
+    MutualFundReturn(),
     MutualFundProportion(),
     Container(child: Center(child: Text("Fee"))),
   ];
