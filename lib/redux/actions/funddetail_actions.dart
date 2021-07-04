@@ -35,8 +35,6 @@ ThunkAction loadingFundAction(finId) {
       List<FundTopHoldClass> topHoldings = List<FundTopHoldClass>.from(list3.map((model)=> FundTopHoldClass.fromJson(model)));
       List<InvestmentProportionClass> investmentProportion = List<InvestmentProportionClass>.from(list4.map((model)=> InvestmentProportionClass.fromJson(model)));
 
-      print(investmentProportion.first.name);
-
       var f = NumberFormat("#,###.##");
 
 

@@ -6,7 +6,7 @@ class Performance extends StatelessWidget {
     return Container(
         alignment: Alignment.topRight,
         child: Row(children: <Widget>[
-          Container(width: 150),
+          Container(width: 100),
           Container(alignment: Alignment.center, width: 80, child: Text("กองนี้",
               style: TextStyle(
                   fontWeight: FontWeight.bold))),
@@ -26,7 +26,7 @@ class Performance extends StatelessWidget {
         endIndent: 20,
       ),
       Row(children: <Widget>[
-        Container(alignment: Alignment.center, width: 150, child: Text("$one")),
+        Container(alignment: Alignment.center, width: 100, child: Text("$one")),
         Container(alignment: Alignment.center, width: 80, child: Text("$two")),
         Container(width: 10),
         Container(alignment: Alignment.center, width: 80, child: Text("$three"))

@@ -7,9 +7,6 @@ import 'package:redux_thunk/redux_thunk.dart';
 ThunkAction loadingAction() {
   return (Store store) async {
     new Future(() async{
-      final timer = DateTime.now().hour;
-      print(timer);
-
 
       store.dispatch(new StartLoadingAction());
       loading(4.0 , "Funding AbossZz App").then((loginResponse) {

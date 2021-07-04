@@ -39,7 +39,7 @@ class InvestmentProportion extends StatelessWidget {
         Spacer(),
         Container(
             alignment: Alignment.topRight,
-            width: 100,
+            width: 80,
             child: Text("${item.percent}%")
         )
       ]),
@@ -80,10 +80,6 @@ class InvestmentProportion extends StatelessWidget {
     list.add(0.0);
     list.add(0.0);
     list.add(0.0);
-
-
-    print(list[0]);
-
 
 
     return List.generate(6, (i) {
