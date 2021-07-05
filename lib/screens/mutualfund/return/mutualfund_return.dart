@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:fund_app/model/funddetail_viewmodel.dart';
 import 'package:fund_app/redux/state/app_state.dart';
 import 'package:fund_app/screens/mutualfund/return/performance.dart';
+import 'package:fund_app/screens/mutualfund/return/returnhistory.dart';
 
 class MutualFundReturn extends StatelessWidget {
 
@@ -23,7 +24,7 @@ class MutualFundReturn extends StatelessWidget {
                 Container(height: 5),
                 Container(child: Performance()),
                 Container(height: 20),
-                Container(child: Center(child: Text("boss develop"),)),
+                Container(child: ReturnHistory()),
               ],
             ),
           );

@@ -43,11 +43,12 @@ class Performance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 480,
         decoration: BoxDecoration(
             border: Border.all(color: Colors.blueGrey.withOpacity(0.4))),
         child: Column(children: <Widget>[
           Container(
+              height: 460,
+              color: Colors.blueGrey.withOpacity(0.15),
               padding: EdgeInsets.all(10),
               alignment: Alignment.topLeft,
               child: Column(children: <Widget>[

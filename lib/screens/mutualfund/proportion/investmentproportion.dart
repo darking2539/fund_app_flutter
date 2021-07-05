@@ -149,23 +149,26 @@ class InvestmentProportion extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
             border: Border.all(color: Colors.red.withOpacity(0.4))),
-        child: Column(children: <Widget>[
-          Container(
-              color: Colors.red.withOpacity(0.2),
-              padding: EdgeInsets.all(10),
-              alignment: Alignment.topLeft,
-              child: Column(children: <Widget>[
-                Container(
-                    alignment: Alignment.topLeft,
-                    child: Text("Investment Proportion",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 25))),
-                Container(height: 5),
-                Container(
-                    alignment: Alignment.topLeft, child: Text('\u{23F1} ${viewModel.dataDate}'))
-              ])),
-          top5HoldingDonut(viewModel),
-          getTextWidgets(viewModel.payload2),
-        ]));
+        child: Container(
+          color: Colors.red.withOpacity(0.1),
+          child: Column(children: <Widget>[
+            Container(
+                color: Colors.red.withOpacity(0.3),
+                padding: EdgeInsets.all(10),
+                alignment: Alignment.topLeft,
+                child: Column(children: <Widget>[
+                  Container(
+                      alignment: Alignment.topLeft,
+                      child: Text("Investment Proportion",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 25))),
+                  Container(height: 5),
+                  Container(
+                      alignment: Alignment.topLeft, child: Text('\u{23F1} ${viewModel.dataDate}'))
+                ])),
+            top5HoldingDonut(viewModel),
+            getTextWidgets(viewModel.payload2),
+          ]),
+        ));
   }
 }
