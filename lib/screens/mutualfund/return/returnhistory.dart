@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fund_app/model/fundreturn_viewmodel.dart';
 import 'package:fund_app/screens/mutualfund/return/returnhistory_graph.dart';
 
 class ReturnHistory extends StatelessWidget {
 
+  ReturnHistory({
+    required this.viewModel,
+  });
 
+  FundReturnViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +28,8 @@ class ReturnHistory extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 25))),
                 Container(height: 5),
-                Container(
-                    alignment: Alignment.topLeft,
-                    child: Text('(K-SET50)',
-                        style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14,
-                            color: Colors.grey[600]))),
                 Container(height: 20),
-                ReturnHistoryGraph()
+                ReturnHistoryGraph(viewModel: viewModel),
 
               ])),
         ]));

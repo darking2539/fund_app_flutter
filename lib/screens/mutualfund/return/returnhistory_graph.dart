@@ -1,12 +1,69 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:fund_app/model/fundreturn_viewmodel.dart';
 
 class ReturnHistoryGraph extends StatefulWidget {
+
+  ReturnHistoryGraph({
+    required this.viewModel,
+  });
+
+  FundReturnViewModel viewModel;
+
   @override
   State<StatefulWidget> createState() => BarChartSample5State();
 }
 
 class BarChartSample5State extends State<ReturnHistoryGraph> {
+
+  double minMax = 0;
+  double interval  = 0;
+  List<int> yearList = [0];
+
+  dataList(){
+    List<FundReturnHistoryClass> rawList = widget.viewModel.payload2;
+    List<BarChartGroupData> outputList = [];
+    List<int> yearListDetail = [0];
+    int i = 1;
+
+    for (FundReturnHistoryClass data in rawList){
+      if (data.value != null){
+        yearListDetail.add(data.year);
+        var x =  BarChartGroupData(x: i++, barRods: [
+          BarChartRodData(y: data.value, width: 15, colors: [data.value > 0 ? Colors.greenAccent : Colors.redAccent], borderRadius: const BorderRadius.all(Radius.circular(2))),
+        ]);
+        outputList.add(x);
+        if (data.value.abs() > minMax){
+          minMax = data.value;
+        }
+      }
+
+    }
+    return outputList;
+  }
+
+  void initValue() {
+
+    List<FundReturnHistoryClass> rawList = widget.viewModel.payload2;
+
+    for (FundReturnHistoryClass data in rawList){
+      if (data.value != null){
+        yearList.add(data.year);
+        if (data.value.abs() > minMax){
+          minMax = data.value.abs();
+        }
+      }
+      minMax = ((minMax ~/ 5) * 5.0) ;
+      interval = 5;
+      if (minMax >= 40){
+        interval = 10;
+      }
+
+      if (minMax >= 80){
+        interval = 20;
+      }
+    }
+  }
 
   exampleList() {
     return [
@@ -37,6 +94,7 @@ class BarChartSample5State extends State<ReturnHistoryGraph> {
   @override
   void initState() {
     super.initState();
+    initValue();
   }
 
   @override
@@ -54,32 +112,8 @@ class BarChartSample5State extends State<ReturnHistoryGraph> {
                 touchTooltipData: BarTouchTooltipData(
                     tooltipBgColor: Colors.black38,
                     getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                      String weekDay;
-                      switch (group.x.toInt()) {
-                        case 1:
-                          weekDay = '2014';
-                          break;
-                        case 2:
-                          weekDay = '2015';
-                          break;
-                        case 3:
-                          weekDay = '2016';
-                          break;
-                        case 4:
-                          weekDay = '2017';
-                          break;
-                        case 5:
-                          weekDay = '2018';
-                          break;
-                        case 6:
-                          weekDay = '2019';
-                          break;
-                        case 7:
-                          weekDay = '2020';
-                          break;
-                        default:
-                          throw Error();
-                      }
+                      int index = group.x.toInt();
+                      String weekDay = yearList[index].toString();
                       return BarTooltipItem(
                         weekDay + '\n',
                         TextStyle(
@@ -101,8 +135,8 @@ class BarChartSample5State extends State<ReturnHistoryGraph> {
                     }),
 
               ),
-                maxY: 10,
-                minY: -10,
+                maxY: minMax,
+                minY: -minMax,
                 titlesData: FlTitlesData(
                   show: true,
                   bottomTitles: SideTitles(
@@ -111,24 +145,8 @@ class BarChartSample5State extends State<ReturnHistoryGraph> {
                     margin: 10,
                     rotateAngle: 0,
                     getTitles: (double value) {
-                      switch (value.toInt()) {
-                        case 1:
-                          return '2014';
-                        case 2:
-                          return '2015';
-                        case 3:
-                          return '2016';
-                        case 4:
-                          return '2017';
-                        case 5:
-                          return '2018';
-                        case 6:
-                          return '2019';
-                        case 7:
-                          return '2020';
-                        default:
-                          return '';
-                      }
+                      int index = value.toInt();
+                      return yearList[index].toString();
                     },
                   ),
                   leftTitles: SideTitles(
@@ -141,14 +159,14 @@ class BarChartSample5State extends State<ReturnHistoryGraph> {
                       }
                       return '${value.toInt()}%';
                     },
-                    interval: 5,
+                    interval: interval, //edit interval
                     margin: 8,
                     reservedSize: 30,
                   ),
                 ) ,
                 gridData: FlGridData(
                   show: true,
-                  checkToShowHorizontalLine: (value) => value % 5 == 0,
+                  checkToShowHorizontalLine: (value) => value % interval == 0, //edit interval
                   getDrawingHorizontalLine: (value) {
                     if (value == 0) {
                       return FlLine(color: Color(0xff2a2747), strokeWidth: 0.4);
@@ -164,7 +182,7 @@ class BarChartSample5State extends State<ReturnHistoryGraph> {
                     border: Border(
                         bottom: BorderSide(width: 0.5, color: Color(0xff2a2747) ))),
                 groupsSpace: 10,
-                barGroups: exampleList()))),
+                barGroups: dataList()))),
       ),
     );
   }

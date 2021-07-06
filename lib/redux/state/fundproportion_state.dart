@@ -1,4 +1,3 @@
-import 'package:fund_app/model/funddetail_viewmodel.dart';
 import 'package:fund_app/model/fundproportion_viewmodel.dart';
 import 'package:meta/meta.dart';
 

@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fund_app/model/fundreturn_viewmodel.dart';
 
 class Performance extends StatelessWidget {
+
+  Performance({
+    required this.viewModel,
+  });
+
+  FundReturnViewModel viewModel;
 
   Widget header() {
     return Container(
