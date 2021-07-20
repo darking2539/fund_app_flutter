@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fund_app/model/mutualfund_viewmodel.dart';
+import 'package:fund_app/screens/authentication/login/login.dart';
+import 'package:fund_app/screens/authentication/register/register.dart';
 import 'package:fund_app/screens/mutualfund/mutualfund_screen.dart';
+import 'package:fund_app/screens/myportfolio/myportfolio_screen.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -24,14 +27,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static List<Widget> _widgetOptions(store) => <Widget>[
     MutualFund(store: store ,viewModel: MutualFundViewModel.fromStore(store)),
-    Container(child: Center(child: Text("My Portfolio"))),
-    Container(child: Center(child: Text("Analytics"))),
+    MyPortfolioScreen(),
+    LoginPage(),
     Container(child: Center(child: Text("More"))),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
       body: Center(
         child: _widgetOptions(widget.store).elementAt(_selectedIndex),
       ),

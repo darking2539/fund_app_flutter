@@ -26,8 +26,8 @@ class MutualFundProportion extends StatelessWidget {
               children: <Widget>[
                 Container(height: 5),
                 Container(child: Top5Holding(viewModel: viewModel)),
-                Container(height: 20),
-                Container(child: InvestmentProportion(viewModel: viewModel)),
+                //Container(height: 20),
+                //Container(child: InvestmentProportion(viewModel: viewModel)),  //finomena remove this API
               ],
             ),
           );

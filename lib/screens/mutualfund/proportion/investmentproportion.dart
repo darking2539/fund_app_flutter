@@ -68,6 +68,7 @@ class InvestmentProportion extends StatelessWidget {
 
     List list = [];
     for (InvestmentProportionClass i in viewModel.payload2){
+      print(i);
       if (double.parse('${i.percent}') > 0){
         list.add(double.parse('${i.percent}'));
       } else{
@@ -80,6 +81,8 @@ class InvestmentProportion extends StatelessWidget {
     list.add(0.0);
     list.add(0.0);
     list.add(0.0);
+
+    print(list);
 
 
     return List.generate(6, (i) {
