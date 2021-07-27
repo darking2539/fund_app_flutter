@@ -10,12 +10,14 @@ class LoginViewModel {
   final LoginResponse user;
 
   final Function(String, String) login;
+  final Function() logout;
 
   LoginViewModel({
     required this.isLoading,
     required this.loginError,
     required this.user,
     required this.login,
+    required this.logout,
   });
 
   static LoginViewModel fromStore(Store<AppState> store) {
@@ -26,6 +28,9 @@ class LoginViewModel {
       login: (String username, String password) {
         store.dispatch(loginUser(username, password));
       },
+      logout: (){
+        store.dispatch(logoutUser());
+      }
     );
   }
 }
@@ -33,9 +38,11 @@ class LoginViewModel {
 class LoginResponse {
   int userId;
   String userName;
+  String password;
 
   LoginResponse({
     required this.userId,
-    required this.userName
+    required this.userName,
+    required this.password,
   });
 }

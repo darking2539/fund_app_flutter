@@ -4,6 +4,7 @@ import 'package:fund_app/model/funddetail_viewmodel.dart';
 import 'package:fund_app/model/mutualfund_viewmodel.dart';
 import 'package:fund_app/redux/reducers/app_reducer.dart';
 import 'package:fund_app/redux/state/app_state.dart';
+import 'package:fund_app/screens/authentication/register/register.dart';
 import 'package:fund_app/screens/home/homescreen.dart';
 import 'package:fund_app/screens/loading/loadingscreen.dart';
 import 'package:fund_app/screens/mutualfund/mutualfund_detail.dart';
@@ -13,6 +14,7 @@ import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'model/loading_viewmodel.dart';
 import 'navigation/navigation.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -41,6 +43,9 @@ class MyApp extends StatelessWidget {
           },
           Routes.fundDetail: (context) {
             return MutualFundDetail(viewModel_1: FundDetailViewModel.fromStore(store), viewModel_2: MutualFundViewModel.fromStore(store));
+          },
+          Routes.registerScreen: (context) {
+            return SignUpPage();
           },
         },
       ),

@@ -11,4 +11,5 @@ class Routes {
   static final registerScreen = "REGISTER_SCREEN";
   static final errorScreen = "ERROR_SCREEN";
   static final fundDetail = "FUND_DETAIL_SCREEN";
+
 }

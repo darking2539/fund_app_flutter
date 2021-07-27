@@ -14,9 +14,11 @@ class UserState {
   });
 
   factory UserState.initial() {
-    int userId;
-    String userName;
-    return new UserState(isLoading: false, loginError: false, user: LoginResponse(userName: '', userId: 0)  );
+    int userId = 1;
+    String userName = 'loading';
+    String password = 'password';
+
+    return new UserState(isLoading: false, loginError: false, user: LoginResponse(userName:  userName, password: password, userId: userId)  );
   }
 
   factory UserState.copyWith({required bool isLoading, required bool loginError, required LoginResponse user}) {
@@ -36,3 +38,4 @@ class UserState {
   @override
   int get hashCode => isLoading.hashCode ^ user.hashCode;
 }
+

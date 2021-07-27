@@ -8,17 +8,17 @@ import 'package:redux/redux.dart';
 final userReducer = combineReducers<UserState>([
   TypedReducer<UserState, LoginSuccessAction>(_loginSuccess),
   TypedReducer<UserState, LoginFailedAction>(_loginFailed),
-  TypedReducer<UserState, StartLoadingAction>(_startLoading),
+  TypedReducer<UserState, StartLoginAction>(_startLoading),
 ]);
 
 UserState _loginSuccess(UserState state, LoginSuccessAction action) {
-  return UserState.copyWith(user: LoginResponse(userName: action.user.userName, userId: action.user.userId), isLoading: false, loginError: false);
+  return UserState.copyWith(user: LoginResponse(userName: action.user.userName, userId: action.user.userId, password: action.user.password), isLoading: false, loginError: false);
 }
 
 UserState _loginFailed(UserState state, LoginFailedAction action) {
-  return UserState.copyWith(user: LoginResponse(userName: '', userId: 0), isLoading: false, loginError: true);
+  return UserState.copyWith(user: LoginResponse(userName: '', userId: 0, password: ''), isLoading: false, loginError: true);
 }
 
-UserState _startLoading(UserState state, StartLoadingAction action) {
-  return UserState.copyWith(user: LoginResponse(userName: '', userId: 0), isLoading: false, loginError: true);
+UserState _startLoading(UserState state, StartLoginAction action) {
+  return UserState.copyWith(user: LoginResponse(userName: '', userId: 0, password: ''), isLoading: false, loginError: true);
 }
